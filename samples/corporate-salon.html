@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BLOOM Hair Studio | Corporate Salon</title>
+  <style>
+    :root {
+      --bg: #fffaf8;
+      --surface: #ffffff;
+      --primary: #e8c4b8;
+      --primary-deep: #d9a99a;
+      --text: #3f3532;
+      --muted: #7d6d68;
+      --line: rgba(63, 53, 50, 0.08);
+      --shadow: 0 18px 40px rgba(120, 84, 72, 0.12);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --container: min(1120px, calc(100% - 32px));
+      --transition: 0.35s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(232, 196, 184, 0.22), transparent 28%),
+        linear-gradient(180deg, #fffdfc 0%, var(--bg) 100%);
+      line-height: 1.7;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-heading {
+      margin-bottom: 32px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      color: var(--primary-deep);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
+    }
+
+    h2 {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 250, 248, 0.82);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .logo-mark {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .logo-sub {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .menu-toggle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .menu-toggle span,
+    .menu-toggle span::before,
+    .menu-toggle span::after {
+      display: block;
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text);
+      position: relative;
+      transition: transform var(--transition), opacity var(--transition);
+      content: "";
+    }
+
+    .menu-toggle span::before {
+      position: absolute;
+      top: -6px;
+    }
+
+    .menu-toggle span::after {
+      position: absolute;
+      top: 6px;
+    }
+
+    .menu-toggle[aria-expanded="true"] span {
+      background: transparent;
+    }
+
+    .menu-toggle[aria-expanded="true"] span::before {
+      top: 0;
+      transform: rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span::after {
+      top: 0;
+      transform: rotate(-45deg);
+    }
+
+    .nav-panel {
+      position: absolute;
+      inset: calc(100% + 10px) 16px auto;
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid rgba(232, 196, 184, 0.35);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+
+    .nav-panel.is-open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-list a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 14px;
+      transition: background var(--transition), color var(--transition), transform var(--transition);
+    }
+
+    .nav-list a:hover {
+      background: rgba(232, 196, 184, 0.18);
+      color: var(--primary-deep);
+      transform: translateX(4px);
+    }
+
+    .hero {
+      padding: 28px 0 72px;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      display: grid;
+      gap: 20px;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-copy p {
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, #f2d8cf 100%);
+      box-shadow: 0 14px 28px rgba(217, 169, 154, 0.28);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(232, 196, 184, 0.5);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 30px rgba(120, 84, 72, 0.16);
+    }
+
+    .hero-slider {
+      position: relative;
+      min-height: 420px;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: #f7ece8;
+    }
+
+    .slides {
+      height: 100%;
+      position: relative;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 28px;
+      display: flex;
+      align-items: flex-end;
+      opacity: 0;
+      animation: fadeSlide 15s infinite;
+    }
+
+    .slide:nth-child(1) {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0)),
+        linear-gradient(135deg, #f7d9d0 0%, #e8c4b8 45%, #d8a89a 100%);
+      animation-delay: 0s;
+    }
+
+    .slide:nth-child(2) {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0)),
+        linear-gradient(135deg, #f8e8e1 0%, #efcfc4 45%, #d9b0a4 100%);
+      animation-delay: 5s;
+    }
+
+    .slide:nth-child(3) {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0)),
+        linear-gradient(135deg, #f4d8d2 0%, #e7c0b6 50%, #c9968a 100%);
+      animation-delay: 10s;
+    }
+
+    .slide::before,
+    .slide::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      filter: blur(2px);
+    }
+
+    .slide::before {
+      width: 180px;
+      height: 180px;
+      top: 32px;
+      right: 24px;
+    }
+
+    .slide::after {
+      width: 120px;
+      height: 120px;
+      bottom: 90px;
+      left: 24px;
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      max-width: 280px;
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      color: #fff;
+    }
+
+    .slide-content strong {
+      display: block;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .slider-dots {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      display: flex;
+      gap: 8px;
+      z-index: 2;
+    }
+
+    .slider-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      animation: dotPulse 15s infinite;
+    }
+
+    .slider-dots span:nth-child(1) { animation-delay: 0s; }
+    .slider-dots span:nth-child(2) { animation-delay: 5s; }
+    .slider-dots span:nth-child(3) { animation-delay: 10s; }
+
+    .cards {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(232, 196, 184, 0.28);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 36px rgba(120, 84, 72, 0.16);
+      border-color: rgba(217, 169, 154, 0.45);
+    }
+
+    .service-icon,
+    .stylist-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(232, 196, 184, 0.22), rgba(232, 196, 184, 0.5));
+      color: var(--primary-deep);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+
+    .service-card h3,
+    .stylist-card h3,
+    .review-card h3 {
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .service-meta,
+    .stylist-role {
+      color: var(--primary-deep);
+      font-size: 0.92rem;
+      margin-bottom: 10px;
+    }
+
+    .stylist-avatar {
+      border-radius: 50%;
+      width: 84px;
+      height: 84px;
+      font-size: 1.1rem;
+    }
+
+    .review-stars {
+      color: #d9a99a;
+      letter-spacing: 0.18em;
+      margin-bottom: 12px;
+    }
+
+    .cta {
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(232, 196, 184, 0.95), rgba(255, 245, 241, 0.95)),
+        #fff;
+    }
+
+    .cta::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -60px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 20px;
+    }
+
+    .access-grid,
+    .footer-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .access-map {
+      min-height: 240px;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(232, 196, 184, 0.18), rgba(255,255,255,0.9)),
+        repeating-linear-gradient(
+          90deg,
+          rgba(217, 169, 154, 0.12) 0,
+          rgba(217, 169, 154, 0.12) 1px,
+          transparent 1px,
+          transparent 48px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(217, 169, 154, 0.12) 0,
+          rgba(217, 169, 154, 0.12) 1px,
+          transparent 1px,
+          transparent 48px
+        );
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .access-map::after {
+      content: "BLOOM Hair Studio";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 10px 24px rgba(120, 84, 72, 0.12);
+      color: var(--primary-deep);
+      font-weight: 600;
+    }
+
+    .footer {
+      padding: 28px 0 40px;
+      color: var(--muted);
+    }
+
+    .footer-grid {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeSlide {
+      0%, 28% { opacity: 0; }
+      6%, 22% { opacity: 1; }
+      33%, 100% { opacity: 0; }
+    }
+
+    @keyframes dotPulse {
+      0%, 28%, 100% {
+        transform: scale(0.9);
+        background: rgba(255, 255, 255, 0.45);
+      }
+      6%, 22% {
+        transform: scale(1.2);
+        background: rgba(255, 255, 255, 0.95);
+      }
+    }
+
+    @media (min-width: 768px) {
+      .section {
+        padding: 96px 0;
+      }
+
+      .hero-grid,
+      .access-grid,
+      .footer-grid,
+      .cta-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cards.services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cards.stylists {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .cards.reviews {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .nav-panel {
+        position: static;
+        inset: auto;
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+      }
+
+      .nav-list {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .nav-list a {
+        padding: 10px 14px;
+      }
+
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+
+      .slide {
+        opacity: 1;
+        position: relative;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="#top" aria-label="BLOOM Hair Studio">
+        <span class="logo-mark">BLOOM</span>
+        <span class="logo-sub">Hair Studio</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="メニューを開く">
+        <span></span>
+      </button>
+      <nav class="nav-panel" id="site-nav">
+        <ul class="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#stylists">Stylists</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#access">Access</a></li>
+          <li><a href="#reserve">Reserve</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">Natural elegance</span>
+          <h1>BLOOM Hair Studio</h1>
+          <p>髪も気分もやわらかく整う、都会の中のプライベートサロン。丁寧なカウンセリングと洗練された技術で、あなたらしい美しさを引き出します。</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#reserve">ご予約はこちら</a>
+            <a class="button button-secondary" href="#services">サービスを見る</a>
+          </div>
+        </div>
+        <div class="hero-slider reveal" aria-label="サロンイメージスライダー">
+          <div class="slides">
+            <article class="slide">
+              <div class="slide-content">
+                <strong>Soft Layer Style</strong>
+                <p>透明感と軽やかさを大切にした、今の気分に寄り添うデザイン。</p>
+              </div>
+            </article>
+            <article class="slide">
+              <div class="slide-content">
+                <strong>Relaxing Care Time</strong>
+                <p>香りと手触りにこだわったケアメニューで、心までほどける時間を。</p>
+              </div>
+            </article>
+            <article class="slide">
+              <div class="slide-content">
+                <strong>Color with Nuance</strong>
+                <p>肌なじみの良いピンクベージュ系カラーで、上品なツヤ感を演出。</p>
+              </div>
+            </article>
+          </div>
+          <div class="slider-dots" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Concept</span>
+          <h2>毎日に寄り添う、上質でやさしいサロン体験</h2>
+          <p class="lead">BLOOM Hair Studio は、忙しい日常の中でも自分らしく整う時間を大切にする美容院です。ナチュラルな美しさを引き立てる提案と、落ち着いた空間づくりにこだわっています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Services</span>
+          <h2>一人ひとりに合わせたメニュー</h2>
+          <p class="lead">髪質やライフスタイルに合わせて、再現性と心地よさを両立する施術をご提案します。</p>
+        </div>
+        <div class="cards services">
+          <article class="card service-card reveal">
+            <div class="service-icon">CUT</div>
+            <h3>カット</h3>
+            <p class="service-meta">似合わせ × 再現性</p>
+            <p>骨格や髪の流れを見極め、毎朝のスタイリングが楽になるシルエットをデザインします。</p>
+          </article>
+          <article class="card service-card reveal">
+            <div class="service-icon">COL</div>
+            <h3>カラー</h3>
+            <p class="service-meta">透明感 × ツヤ感</p>
+            <p>肌色や季節感に合わせたカラー提案で、やわらかく洗練された印象へ導きます。</p>
+          </article>
+          <article class="card service-card reveal">
+            <div class="service-icon">PERM</div>
+            <h3>パーマ</h3>
+            <p class="service-meta">動き × 抜け感</p>
+            <p>ナチュラルなニュアンスから華やかなウェーブまで、扱いやすさを重視して仕上げます。</p>
+          </article>
+          <article class="card service-card reveal">
+            <div class="service-icon">CARE</div>
+            <h3>トリートメント</h3>
+            <p class="service-meta">補修 × リラックス</p>
+            <p>ダメージケアと癒やしを両立するメニューで、指通りの良いしなやかな髪へ整えます。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="stylists">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Stylists</span>
+          <h2>感性と技術を備えたスタイリスト</h2>
+          <p class="lead">それぞれの得意分野を活かしながら、お客様の魅力を自然に引き出すスタイルをご提案します。</p>
+        </div>
+        <div class="cards stylists">
+          <article class="card stylist-card reveal">
+            <div class="stylist-avatar">AY</div>
+            <h3>Ayaka Mori</h3>
+            <p class="stylist-role">Creative Director</p>
+            <p>やわらかなレイヤースタイルと、顔まわりの似合わせデザインが得意。丁寧なカウンセリングに定評があります。</p>
+          </article>
+          <article class="card stylist-card reveal">
+            <div class="stylist-avatar">RN</div>
+            <h3>Rina Nakase</h3>
+            <p class="stylist-role">Color Specialist</p>
+            <p>透明感カラーやピンクベージュ系の提案が人気。髪のコンディションを見ながら最適な色味を導きます。</p>
+          </article>
+          <article class="card stylist-card reveal">
+            <div class="stylist-avatar">KT</div>
+            <h3>Kento Shiraishi</h3>
+            <p class="stylist-role">Care & Perm Designer</p>
+            <p>やわらかなパーマとヘッドスパを組み合わせたリラックスメニューが得意。メンズスタイルにも対応します。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reviews">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Reviews</span>
+          <h2>お客様の声</h2>
+          <p class="lead">初めての方でも安心して通えるよう、居心地の良さと仕上がりの満足度を大切にしています。</p>
+        </div>
+        <div class="cards reviews">
+          <article class="card review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <h3>落ち着いた空間で安心</h3>
+            <p>「カウンセリングがとても丁寧で、希望をうまく言葉にできなくても汲み取ってくれました。仕上がりも大満足です。」</p>
+          </article>
+          <article class="card review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <h3>カラーの透明感が理想以上</h3>
+            <p>「ピンクベージュの色味が絶妙で、肌まできれいに見える気がします。色落ちまで楽しめる提案が嬉しかったです。」</p>
+          </article>
+          <article class="card review-card reveal">
+            <div class="review-stars">★★★★★</div>
+            <h3>毎朝のセットが楽になった</h3>
+            <p>「カットとパーマで扱いやすくなり、忙しい朝でも簡単にまとまります。サロンの雰囲気もやさしくて通いやすいです。」</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reserve">
+      <div class="container">
+        <div class="card cta reveal">
+          <div class="cta-inner">
+            <div>
+              <span class="eyebrow">Reservation</span>
+              <h2>あなたの“なりたい”を、今日の予約から。</h2>
+              <p class="lead">初回カウンセリング付きのおすすめプランをご用意しています。お気軽にご予約・ご相談ください。</p>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:flex-start;gap:14px;flex-wrap:wrap;">
+              <a class="button button-primary" href="#">WEB予約をする</a>
+              <a class="button button-secondary" href="tel:0312345678">03-1234-5678</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="access">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">Access</span>
+          <h2>アクセス情報</h2>
+          <p class="lead">駅から徒歩3分。お仕事帰りや週末のお出かけ前にも立ち寄りやすいロケーションです。</p>
+        </div>
+        <div class="access-grid">
+          <div class="card reveal">
+            <h3 style="margin-bottom:16px;">BLOOM Hair Studio</h3>
+            <p>〒150-0000 東京都渋谷区桜丘町1-2-3 Bloom Terrace 2F</p>
+            <p>営業時間：10:00 - 20:00（平日） / 9:00 - 19:00（土日祝）</p>
+            <p>定休日：毎週火曜日</p>
+            <p>JR渋谷駅 西口より徒歩3分</p>
+          </div>
+          <div class="access-map reveal" aria-label="アクセスマップイメージ"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="logo" style="margin-bottom:10px;">
+          <span class="logo-mark">BLOOM</span>
+          <span class="logo-sub">Hair Studio</span>
+        </div>
+        <p>やわらかな美しさを、日常の中へ。</p>
+      </div>
+      <div style="display:grid;gap:12px;justify-content:flex-start;">
+        <nav class="footer-nav">
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#stylists">Stylists</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#access">Access</a>
+        </nav>
+        <small>© 2026 BLOOM Hair Studio. All Rights Reserved.</small>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navPanel = document.querySelector('.nav-panel');
+    const navLinks = document.querySelectorAll('.nav-list a');
+
+    if (menuToggle && navPanel) {
+      menuToggle.addEventListener('click', () => {
+        const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!expanded));
+        navPanel.classList.toggle('is-open');
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener('click', () => {
+          if (window.innerWidth < 768) {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navPanel.classList.remove('is-open');
+          }
+        });
+      });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
+</body>
+</html>

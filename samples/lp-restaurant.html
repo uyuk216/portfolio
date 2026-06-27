@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trattoria Sole | モダンイタリアンレストラン</title>
+  <meta name="description" content="Trattoria Soleは、旬の食材と洗練された空間で特別な時間を演出するモダンイタリアンレストランです。">
+  <style>
+    :root {
+      --bg: #1a1a2e;
+      --bg-soft: #22223b;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-strong: rgba(255, 255, 255, 0.1);
+      --text: #f5f1ea;
+      --muted: #c9c1b6;
+      --accent: #d4a574;
+      --accent-deep: #b98a58;
+      --line: rgba(212, 165, 116, 0.22);
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+      --container: min(1120px, calc(100% - 48px));
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Times New Roman", "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(212, 165, 116, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.08), transparent 18%),
+        linear-gradient(180deg, #161625 0%, #1a1a2e 45%, #141421 100%);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: var(--container);
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 110px 0;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.15;
+      margin: 0 0 18px;
+      letter-spacing: 0.04em;
+    }
+
+    .section-lead {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 0.78rem;
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 42px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent));
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(16, 16, 28, 0.45);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .header-inner {
+      width: var(--container);
+      margin: 0 auto;
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      font-size: 1.35rem;
+      letter-spacing: 0.12em;
+    }
+
+    .nav {
+      display: flex;
+      gap: 24px;
+      color: rgba(245, 241, 234, 0.82);
+      font-size: 0.95rem;
+    }
+
+    .nav a {
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 1px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 0.35s ease;
+    }
+
+    .nav a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 54px;
+      padding: 0 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 165, 116, 0.45);
+      background: linear-gradient(135deg, var(--accent) 0%, #f0c89b 100%);
+      color: #1b1620;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 40px rgba(212, 165, 116, 0.22);
+      transition: transform 0.35s ease, box-shadow 0.35s ease, filter 0.35s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 22px 48px rgba(212, 165, 116, 0.28);
+      filter: brightness(1.03);
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--text);
+      border-color: rgba(255, 255, 255, 0.18);
+      box-shadow: none;
+    }
+
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      align-items: center;
+      padding: 120px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 50%;
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .hero::before {
+      width: 520px;
+      height: 520px;
+      top: -120px;
+      right: -120px;
+      background: radial-gradient(circle, rgba(212, 165, 116, 0.28), transparent 62%);
+    }
+
+    .hero::after {
+      width: 420px;
+      height: 420px;
+      bottom: -140px;
+      left: -120px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.08), transparent 60%);
+    }
+
+    .hero-grid {
+      width: var(--container);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-title {
+      font-size: clamp(3.4rem, 8vw, 6.8rem);
+      line-height: 0.95;
+      margin: 0 0 24px;
+      letter-spacing: 0.04em;
+      text-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-title span {
+      display: block;
+      color: var(--accent);
+      font-size: 0.42em;
+      letter-spacing: 0.28em;
+      margin-bottom: 18px;
+    }
+
+    .hero-text {
+      max-width: 620px;
+      color: rgba(245, 241, 234, 0.82);
+      font-size: 1.08rem;
+      margin-bottom: 34px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 42px;
+    }
+
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      max-width: 720px;
+    }
+
+    .meta-card {
+      padding: 20px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .meta-card strong {
+      display: block;
+      color: var(--accent);
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      border-radius: 36px;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(10, 10, 18, 0.1), rgba(10, 10, 18, 0.72)),
+        radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.18), transparent 18%),
+        linear-gradient(135deg, rgba(212, 165, 116, 0.28), rgba(34, 34, 59, 0.2) 40%, rgba(12, 12, 20, 0.92) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 24px;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 30%),
+        radial-gradient(circle at 50% 30%, rgba(212, 165, 116, 0.22), transparent 28%),
+        linear-gradient(160deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.18));
+    }
+
+    .hero-plate,
+    .hero-glass,
+    .hero-copy-card {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-plate {
+      width: 280px;
+      height: 280px;
+      right: 72px;
+      top: 92px;
+      background:
+        radial-gradient(circle at center, rgba(255, 248, 240, 0.95) 0 34%, rgba(212, 165, 116, 0.28) 35%, rgba(255, 255, 255, 0.08) 52%, transparent 53%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02));
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    .hero-plate::before {
+      content: "";
+      position: absolute;
+      inset: 72px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 50%, #d94f3d 0 28%, #f2d18f 29% 42%, #4f7a42 43% 52%, transparent 53%),
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.45), transparent 18%);
+      filter: saturate(1.1);
+    }
+
+    .hero-glass {
+      width: 120px;
+      height: 120px;
+      left: 72px;
+      bottom: 110px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.04)),
+        radial-gradient(circle at 50% 70%, rgba(212, 165, 116, 0.35), transparent 42%);
+    }
+
+    .hero-copy-card {
+      width: 240px;
+      height: auto;
+      border-radius: 24px;
+      right: 48px;
+      bottom: 48px;
+      padding: 22px;
+      background: rgba(14, 14, 24, 0.62);
+    }
+
+    .hero-copy-card strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .hero-copy-card p {
+      margin: 0;
+      color: rgba(245, 241, 234, 0.78);
+      font-size: 0.95rem;
+    }
+
+    .concept-grid,
+    .access-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 34px;
+      align-items: stretch;
+    }
+
+    .concept-panel,
+    .access-card,
+    .map-card,
+    .cta-panel {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .concept-panel {
+      padding: 38px;
+    }
+
+    .concept-points {
+      display: grid;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .concept-point {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-point:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .concept-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      background: rgba(212, 165, 116, 0.08);
+      border: 1px solid rgba(212, 165, 116, 0.18);
+      font-size: 1.4rem;
+    }
+
+    .concept-visual {
+      min-height: 100%;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .concept-visual::before {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.58)),
+        linear-gradient(135deg, rgba(212, 165, 116, 0.28), rgba(255, 255, 255, 0.06) 45%, rgba(26, 26, 46, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-quote {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      bottom: 56px;
+      z-index: 1;
+      padding: 28px;
+      border-radius: 22px;
+      background: rgba(12, 12, 20, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .concept-quote p {
+      margin: 0 0 12px;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+
+    .concept-quote span {
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      margin-top: 42px;
+    }
+
+    .menu-card {
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      transition: transform 0.35s ease, border-color 0.35s ease;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(212, 165, 116, 0.35);
+    }
+
+    .menu-image {
+      aspect-ratio: 4 / 5;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.48)),
+        linear-gradient(135deg, rgba(212, 165, 116, 0.42), rgba(255, 255, 255, 0.08) 35%, rgba(34, 34, 59, 0.92));
+    }
+
+    .menu-image::before {
+      content: "Placeholder";
+      position: absolute;
+      inset: auto 18px 18px auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.82);
+      background: rgba(12, 12, 20, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .menu-image::after {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255, 255, 255, 0.22), transparent 18%),
+        radial-gradient(circle at 50% 58%, rgba(212, 165, 116, 0.42), transparent 26%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 40%);
+    }
+
+    .menu-body {
+      padding: 24px;
+    }
+
+    .menu-body h3 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .menu-body p {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .menu-price {
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      font-size: 0.92rem;
+      text-transform: uppercase;
+    }
+
+    .access-card,
+    .map-card {
+      padding: 34px;
+    }
+
+    .info-list {
+      display: grid;
+      gap: 18px;
+      margin-top: 28px;
+    }
+
+    .info-item {
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .info-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .info-item strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 6px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .map-shell {
+      min-height: 100%;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
+        linear-gradient(135deg, rgba(212, 165, 116, 0.18), rgba(255, 255, 255, 0.04) 35%, rgba(34, 34, 59, 0.92));
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .map-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 42px 42px;
+      opacity: 0.35;
+    }
+
+    .map-route,
+    .map-pin {
+      position: absolute;
+    }
+
+    .map-route {
+      inset: 18% 14% 22% 16%;
+      border: 2px dashed rgba(212, 165, 116, 0.55);
+      border-radius: 42% 58% 52% 48% / 38% 42% 58% 62%;
+      transform: rotate(-8deg);
+    }
+
+    .map-pin {
+      width: 26px;
+      height: 26px;
+      border-radius: 50% 50% 50% 0;
+      background: var(--accent);
+      transform: rotate(-45deg);
+      box-shadow: 0 10px 24px rgba(212, 165, 116, 0.28);
+    }
+
+    .map-pin::after {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      background: #fff7ef;
+    }
+
+    .map-pin.pin-a {
+      top: 28%;
+      left: 34%;
+    }
+
+    .map-pin.pin-b {
+      bottom: 24%;
+      right: 26%;
+    }
+
+    .map-label {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 28px;
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(12, 12, 20, 0.62);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .map-label strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .cta-panel {
+      padding: 54px;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cta-panel::before {
+      content: "";
+      position: absolute;
+      inset: -20% 20% auto;
+      height: 220px;
+      background: radial-gradient(circle, rgba(212, 165, 116, 0.22), transparent 60%);
+      pointer-events: none;
+    }
+
+    .cta-panel p {
+      max-width: 720px;
+      margin: 0 auto 28px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 34px 0 48px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: rgba(245, 241, 234, 0.68);
+    }
+
+    .footer-inner {
+      width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .concept-grid,
+      .access-grid,
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 520px;
+      }
+
+      .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root {
+        --container: min(100% - 32px, 1120px);
+      }
+
+      .site-header {
+        position: sticky;
+      }
+
+      .header-inner {
+        min-height: 72px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .section {
+        padding: 84px 0;
+      }
+
+      .hero {
+        padding-top: 72px;
+      }
+
+      .hero-meta,
+      .menu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 420px;
+      }
+
+      .hero-plate {
+        width: 220px;
+        height: 220px;
+        right: 36px;
+        top: 64px;
+      }
+
+      .hero-glass {
+        width: 92px;
+        height: 92px;
+        left: 36px;
+        bottom: 92px;
+      }
+
+      .hero-copy-card,
+      .concept-quote {
+        left: 24px;
+        right: 24px;
+        bottom: 24px;
+      }
+
+      .concept-panel,
+      .access-card,
+      .map-card,
+      .cta-panel {
+        padding: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">Trattoria Sole</a>
+      <nav class="nav" aria-label="グローバルナビゲーション">
+        <a href="#concept">Concept</a>
+        <a href="#menu">Menu</a>
+        <a href="#access">Access</a>
+        <a href="#reserve">Reserve</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Modern Italian Dining</div>
+          <h1 class="hero-title">
+            <span>Trattoria Sole</span>
+            一皿ごとに、<br>夜が深まる。
+          </h1>
+          <p class="hero-text">
+            旬の食材を活かしたモダンイタリアンと、静かに華やぐダークトーンの空間。
+            記念日にも、上質な日常にも寄り添う一軒として、特別な時間をお届けします。
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="#reserve">席を予約する</a>
+            <a class="button secondary" href="#menu">メニューを見る</a>
+          </div>
+          <div class="hero-meta">
+            <div class="meta-card">
+              <strong>Seasonal</strong>
+              <span>旬の素材を主役にした月替わりコース</span>
+            </div>
+            <div class="meta-card">
+              <strong>Wine Pairing</strong>
+              <span>ソムリエ厳選のペアリングで余韻まで美しく</span>
+            </div>
+            <div class="meta-card">
+              <strong>Private Mood</strong>
+              <span>デートや会食に映える落ち着いた上質空間</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal" aria-hidden="true">
+          <div class="hero-plate"></div>
+          <div class="hero-glass"></div>
+          <div class="hero-copy-card">
+            <strong>Chef's Selection</strong>
+            <p>薪の香り、柑橘の酸味、濃密な旨み。コースの流れまで設計された一夜の体験。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="concept">
+      <div class="container">
+        <div class="concept-grid">
+          <div class="concept-panel reveal">
+            <div class="eyebrow">Concept</div>
+            <h2 class="section-title">都会の喧騒を離れ、感性で味わうイタリアン。</h2>
+            <p class="section-lead">
+              Trattoria Soleは、クラシックなイタリア料理の魅力を土台に、
+              現代的な感性で再構築したモダンイタリアンレストランです。
+              味わいだけでなく、照明、音、余白まで含めて「また来たくなる体験」を設計しています。
+            </p>
+            <div class="concept-points">
+              <div class="concept-point">
+                <div class="concept-icon">✦</div>
+                <div>
+                  <h3>素材の輪郭を引き立てる構成</h3>
+                  <p>産地直送の魚介や季節野菜を、火入れと香りのレイヤーで丁寧に引き出します。</p>
+                </div>
+              </div>
+              <div class="concept-point">
+                <div class="concept-icon">✦</div>
+                <div>
+                  <h3>洗練されたダイニング体験</h3>
+                  <p>ダークトーンを基調にした空間設計で、料理と会話が自然に主役になる時間を演出。</p>
+                </div>
+              </div>
+              <div class="concept-point">
+                <div class="concept-icon">✦</div>
+                <div>
+                  <h3>記憶に残るペアリング</h3>
+                  <p>ワインやノンアルコールペアリングまで含めて、一皿ごとの余韻をデザインします。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="concept-panel concept-visual reveal">
+            <div class="concept-quote">
+              <p>“料理を食べる場所ではなく、夜を美しく過ごすためのレストラン。”</p>
+              <span>Signature Experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="menu">
+      <div class="container">
+        <div class="reveal">
+          <div class="eyebrow">Menu Highlight</div>
+          <h2 class="section-title">シグネチャーを感じる、人気メニュー。</h2>
+          <p class="section-lead">
+            見た目の華やかさだけでなく、香り・温度・食感の流れまで計算された一皿をラインアップ。
+            LPサンプルとして、料理写真は差し替えやすいプレースホルダー構成にしています。
+          </p>
+        </div>
+
+        <div class="menu-grid">
+          <article class="menu-card reveal">
+            <div class="menu-image" aria-hidden="true"></div>
+            <div class="menu-body">
+              <h3>黒トリュフ香るタリオリーニ</h3>
+              <p>濃厚な卵麺に、熟成チーズと黒トリュフの香りを重ねたシグネチャーパスタ。</p>
+              <div class="menu-price">Dinner Course Highlight</div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-image" aria-hidden="true"></div>
+            <div class="menu-body">
+              <h3>真鯛のインパデッラ</h3>
+              <p>皮目を香ばしく焼き上げ、焦がしバターと柑橘のソースで軽やかに仕上げた魚料理。</p>
+              <div class="menu-price">Chef Recommendation</div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-image" aria-hidden="true"></div>
+            <div class="menu-body">
+              <h3>和牛フィレのアッロースト</h3>
+              <p>しっとりと火入れした和牛に、赤ワインのソースと季節野菜を添えたメインディッシュ。</p>
+              <div class="menu-price">Premium Main Dish</div>
+            </div>
+          </article>
+
+          <article class="menu-card reveal">
+            <div class="menu-image" aria-hidden="true"></div>
+            <div class="menu-body">
+              <h3>ピスタチオのセミフレッド</h3>
+              <p>食後の余韻を美しく締めくくる、ナッツの香ばしさと軽やかな口どけのデザート。</p>
+              <div class="menu-price">Dessert Signature</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="access">
+      <div class="container">
+        <div class="access-grid">
+          <div class="access-card reveal">
+            <div class="eyebrow">Access & Hours</div>
+            <h2 class="section-title">大切な人を連れて行きたくなる、都心の隠れ家。</h2>
+            <p class="section-lead">
+              駅から徒歩数分の好立地。ディナータイムを中心に、ゆったりとした時間をお楽しみいただけます。
+            </p>
+            <div class="info-list">
+              <div class="info-item">
+                <strong>Address</strong>
+                <div>東京都港区南青山 3-12-8 Sole Minamiaoyama 2F</div>
+              </div>
+              <div class="info-item">
+                <strong>Open</strong>
+                <div>17:30 - 23:00（L.O. 22:00） / 土日祝 11:30 - 15:00, 17:30 - 23:00</div>
+              </div>
+              <div class="info-item">
+                <strong>Access</strong>
+                <div>表参道駅 A4出口より徒歩4分 / 専用駐車場なし</div>
+              </div>
+              <div class="info-item">
+                <strong>Reservation</strong>
+                <div>記念日プレート、ペアリングコース、半個室のご相談も承ります。</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="map-card reveal">
+            <div class="map-shell" aria-label="Google Maps埋め込み風プレースホルダー" role="img">
+              <div class="map-grid"></div>
+              <div class="map-route"></div>
+              <div class="map-pin pin-a"></div>
+              <div class="map-pin pin-b"></div>
+              <div class="map-label">
+                <strong>Map Preview</strong>
+                <div>Google Maps埋め込み差し替え想定エリア。実案件では店舗住所に応じてiframeへ置換可能です。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="reserve">
+      <div class="container">
+        <div class="cta-panel reveal">
+          <div class="eyebrow">Reserve Now</div>
+          <h2 class="section-title">今夜を、記憶に残るディナーへ。</h2>
+          <p>
+            デート、記念日、接待など、シーンに合わせた席提案も可能です。
+            まずはお気軽にご予約ください。ポートフォリオ用途として、CTAは視認性重視で設計しています。
+          </p>
+          <a class="button" href="javascript:void(0)" aria-label="予約ボタン">オンライン予約はこちら</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>© Trattoria Sole. All Rights Reserved.</div>
+      <div>Modern Italian Restaurant Landing Page Sample for Portfolio</div>
+    </div>
+  </footer>
+
+  <script>
+    const revealElements = document.querySelectorAll('.reveal');
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.18,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealElements.forEach((element, index) => {
+      element.style.transitionDelay = `${Math.min(index * 70, 280)}ms`;
+      revealObserver.observe(element);
+    });
+  </script>
+</body>
+</html>
